@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<head>
+  <title>Pup 3000</title>
+  <style>
+    body {
+      text-align: center;<
+      background: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRN6eugk0STG5JiSWQ5v3AR1WKj5OlOw7z4Lg&s");
+      background-size: cover;
+      background-position: center;
+      color: pink;
+      font-family: helvetica;
+    }
+    p {
+      font-size: 22px;
+    }
+    input {
+      border: 0;
+      padding: 10px;
+      font-size: 18px;
+    }
+    button {
+    }
+    input[type="submit"] {
+      background: purple;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOQ3dJ3158idsIlfSTToEsa6QjKFpuNNobyg&s">
+  <h1>Adoption center (Find A Pup Near You):</h1>
+  <p>Pup 3000</p>
+	<input id="Name" placeholder="Your name">
+  <input id="Email" placeholder="Your email">
+  <input id="Breedofdogs" placeholder="Your Dog Breed">
+  <input id="submit" type="submit"> 
+	
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+	import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-database.js";
+
+	
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
+
+  // Your web app's Firebase configuration
+  const firebaseConfig = {
+    apiKey: "AIzaSyC2VGqnOgYCwduDPn5AviOR3LTBx3Yqfpo",
+    authDomain: "sasha-2052d.firebaseapp.com",
+    databaseURL: "https://sasha-2052d-default-rtdb.firebaseio.com",
+    projectId: "sasha-2052d",
+    storageBucket: "sasha-2052d.firebasestorage.app",
+    messagingSenderId: "58250814376",
+    appId: "1:58250814376:web:35210e9f5ca5158b09f39d"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+const Name = document.querySelector("#Name") 
+const Email = document.querySelector("#Email")
+document.querySelector('#submit').addEventListener('click', Submit)
+	
+	function Submit() {
+	  const timestamp = buildTimestamp()
+	  
+	  set(ref(db, timestamp), {
+		  Name: Name.value,
+	      email: Email.value,
+		   DogBreed: DogBreed.value,
+	  });
+
+	  Name.value = ""
+	  Email.value = ""
+	  DogBreed.value=""
+	}
+	
+	
+	
+	
+	
+
+	function buildTimestamp() {
+	  const now = new Date();
+	  let timestamp = now.getFullYear().toString() + "/";
+	  //const month = now.toLocaleString('default', { month: 'long' });
+
+	  let month = now.getMonth()+1   //add 1 because Javascript uses 0 for January
+	  month = month.toString()
+	  month = addLeadingZero(month)
+	  timestamp += month + "/"; 
+
+	  let date = now.getDate().toString()
+	  date = addLeadingZero(date)
+	  timestamp += date + "/";
+
+	  let hours = now.getHours().toString()
+	  hours = addLeadingZero(hours)
+	  timestamp += hours + ":";
+
+	  let minutes = now.getMinutes().toString()
+	  minutes = addLeadingZero(minutes)
+	  timestamp += minutes + ":";
+
+	  let seconds = now.getSeconds().toString()
+	  seconds = addLeadingZero(seconds)
+	  timestamp += seconds;
+  
+	  return timestamp
+	}
+	
+	function addLeadingZero(units) {
+		if (units.length < 2) {
+			units = "0" + units
+		}
+		return units
+	}
+
+</script>
+</body>
